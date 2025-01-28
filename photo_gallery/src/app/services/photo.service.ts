@@ -4,6 +4,8 @@ import { Filesystem, Directory } from '@capacitor/filesystem';
 import { Preferences } from '@capacitor/preferences';
 import { Platform } from '@ionic/angular';
 import { Capacitor } from '@capacitor/core';
+import { getStorage, ref, uploadString, getDownloadURL } from "firebase/storage";
+
 
 @Injectable({
   providedIn: 'root'
@@ -45,11 +47,23 @@ export class PhotoService {
     reader.readAsDataURL(blob);
   })
 
+  private async uploadToFirebase(fileName: string, base64Data: string): Promise<string> {
+    const storage = getStorage();
+    const storageRef = ref(storage, `photos/${fileName}`);
+    await uploadString(storageRef, base64Data, 'data_url');
+    return await getDownloadURL(storageRef);
+  }
+
   // method to save photos
   private async savePicture(photo: Photo) {
     const base64Data = await this.readAsBase64(photo);
 
+    if (typeof base64Data !== 'string') {
+      throw new Error('Failed to convert photo to Base64 string');
+    }
+
     const fileName = Date.now() + '.jpeg';
+    const downloadUrl = await this.uploadToFirebase(fileName, base64Data);
     const savedFile = await Filesystem.writeFile({
       path: fileName,
       data: base64Data,
@@ -106,8 +120,9 @@ export class PhotoService {
       key: this.PHOTO_STORAGE,
       value: JSON.stringify(this.photos),
     });
-
   }
+
+  
 }
 
 // Stores photo into gallery
