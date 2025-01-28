@@ -6,7 +6,7 @@ export const environment = {
   production: false,
 
   firebaseConfig: {
-    apiKey: // add api key
+    apiKey: "AIzaSyBBh6x5ymKb4wK8bFNpjjIM5BI_3fOSUZs",
     authDomain: "photogallery-e0cb4.firebaseapp.com",
     projectId: "photogallery-e0cb4",
     storageBucket: "photogallery-e0cb4.firebasestorage.app",
