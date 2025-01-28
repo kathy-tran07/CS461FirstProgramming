@@ -2,14 +2,11 @@
 // `ng build` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-
 export const environment = {
   production: false,
 
   firebaseConfig: {
-    apiKey: "AIzaSyBBh6x5ymKb4wK8bFNpjjIM5BI_3fOSUZs",
+    apiKey: // add api key
     authDomain: "photogallery-e0cb4.firebaseapp.com",
     projectId: "photogallery-e0cb4",
     storageBucket: "photogallery-e0cb4.firebasestorage.app",
